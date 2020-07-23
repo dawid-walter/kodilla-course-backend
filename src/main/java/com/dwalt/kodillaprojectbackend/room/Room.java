@@ -18,6 +18,7 @@ public class Room {
     @Id
     @GeneratedValue
     private Long id;
+    @Enumerated(value = EnumType.STRING)
     private Color color;
     private String title;
     private String description;
