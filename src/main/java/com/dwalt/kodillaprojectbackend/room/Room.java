@@ -25,6 +25,6 @@ public class Room {
     private int capacity;
     private String imageUrl;
     private double pricePerDay;
-    @ManyToMany
+    @ManyToMany(mappedBy = "rooms")
     private List<Reservation> reservations;
 }

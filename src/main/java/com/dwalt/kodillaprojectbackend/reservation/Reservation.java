@@ -22,7 +22,7 @@ public class Reservation {
     private Long id;
     private LocalDate fromDate;
     private LocalDate toDate;
-    @ManyToMany(mappedBy = "reservations")
+    @ManyToMany
     private List<Room> rooms;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

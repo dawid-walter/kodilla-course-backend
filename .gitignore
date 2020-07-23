@@ -35,3 +35,5 @@ build/
 **/.gradle
 gradlew
 gradlew.bat
+/Start.java
+/Start

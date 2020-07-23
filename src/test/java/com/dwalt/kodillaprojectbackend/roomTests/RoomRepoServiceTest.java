@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -38,7 +39,7 @@ class RoomRepoServiceTest {
     @Test
     @DisplayName("Test getting empty list of rooms from database")
     public void should_get_empty_list_of_rooms() {
-        assertEquals(0, roomRepoService.getAllRooms().size());
+        assertThat(roomRepoService.getAllRooms().size()).isEqualTo(0);
     }
 
     @Test
@@ -46,7 +47,7 @@ class RoomRepoServiceTest {
     public void should_add_room() {
         roomRepoService.addRoom(roomFixture);
 
-        assertEquals(1, roomRepoService.getAllRooms().size());
+        assertThat(roomRepoService.getAllRooms().size()).isEqualTo(1);
 
         roomRepoService.deleteById(roomFixture.getId());
     }
@@ -56,13 +57,13 @@ class RoomRepoServiceTest {
     @DisplayName("Test adding reservation to room in database")
     public void should_add_reservation_to_room() {
         reservationRepoService.addReservation(reservationFixture);
+        Long id = roomFixture.getId();
+
         roomRepoService.addRoom(roomFixture);
         reservationsFixture.add(reservationFixture);
         roomFixture.setReservations(reservationsFixture);
 
-        Long id = roomFixture.getId();
-
-        assertEquals(1, roomRepoService.findRoomById(id).get().getReservations().size());
+        assertThat(roomRepoService.findRoomById(id).get().getReservations().size()).isEqualTo(1);
 
         roomRepoService.deleteById(id);
     }
@@ -74,6 +75,6 @@ class RoomRepoServiceTest {
         Long id = roomFixture.getId();
         roomRepoService.deleteById(id);
 
-        assertEquals(0, roomRepoService.getAllRooms().size());
+        assertThat(roomRepoService.getAllRooms().size()).isEqualTo(0);
     }
 }
