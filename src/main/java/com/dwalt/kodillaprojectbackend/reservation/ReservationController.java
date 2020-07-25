@@ -1,13 +1,11 @@
 package com.dwalt.kodillaprojectbackend.reservation;
 
+import com.dwalt.kodillaprojectbackend.room.RoomDto;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,13 +13,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
-    private final Logger LOGGER = LoggerFactory.getLogger(ReservationController.class);
     private final ReservationRepoService reservationRepoService;
     private final ReservationMapper reservationMapper;
 
     @GetMapping
     public ResponseEntity<List<ReservationDto>> getAll() {
-        List<ReservationDto> reservationDtos = reservationMapper.mapToReservationDtoList(reservationRepoService.getAllReservations());
+        List<ReservationDto> reservationDtos = reservationMapper.mapToReservationDtoList(reservationRepoService.findAll());
         if (reservationDtos != null) {
             return new ResponseEntity<>(reservationDtos, HttpStatus.OK);
         }
@@ -30,7 +27,7 @@ public class ReservationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ReservationDto> getById(@PathVariable Long id) {
-        Optional<Reservation> reservationById = reservationRepoService.findReservationById(id);
+        Optional<Reservation> reservationById = reservationRepoService.findById(id);
         return reservationById.map(reservation ->
                 new ResponseEntity<>(reservationMapper.mapToReservationDto(reservation),
                         HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -38,20 +35,35 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<ReservationDto> add(@RequestBody ReservationDto reservationDto) {
-        Reservation reservation = reservationRepoService.addReservation(reservationMapper.mapToReservation(reservationDto));
-        LOGGER.info("Object {} Added to database, on : {}", reservationDto.getClass().getName(), LocalDateTime.now());
+        System.out.println(reservationDto);
+        Reservation reservation = reservationRepoService.addDto(reservationDto);
+        return new ResponseEntity<>(reservationMapper.mapToReservationDto(reservation), HttpStatus.CREATED);
+    }
+    @PostMapping("/test")
+    public ResponseEntity<ReservationDto> addTest(@RequestBody ReservationDto reservationDto) {
+        Reservation reservation = reservationRepoService.add(reservationMapper.mapToReservation(reservationDto));
         return new ResponseEntity<>(reservationMapper.mapToReservationDto(reservation), HttpStatus.CREATED);
     }
 
+    /*@PostMapping
+    public ResponseEntity<ReservationDto> add(@RequestBody ReservationDto reservationDto, @RequestParam Long roomId) {
+        Reservation reservation = reservationRepoService.addWithRoom(reservationMapper.mapToReservation(reservationDto), roomId);
+        return new ResponseEntity<>(reservationMapper.mapToReservationDto(reservation), HttpStatus.CREATED);
+    }*/
+
     @DeleteMapping
     public ResponseEntity<ReservationDto> delete(Long id) {
-        Optional<Reservation> reservationById = reservationRepoService.findReservationById(id);
+        Optional<Reservation> reservationById = reservationRepoService.findById(id);
         if (reservationById.isPresent()) {
             reservationRepoService.deleteById(id);
-            LOGGER.info("Object {} deleted from database, on : {}", reservationById.getClass().getName(), LocalDateTime.now());
             return new ResponseEntity<>(reservationMapper.mapToReservationDto(reservationById.get()), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{id}")
+    public void addRoomsToReservation(@PathVariable Long id, @RequestBody List<RoomDto> roomsDto) {
+
     }
 }
 

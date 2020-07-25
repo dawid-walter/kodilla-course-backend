@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class RoomRepoServiceTest {
@@ -39,15 +38,15 @@ class RoomRepoServiceTest {
     @Test
     @DisplayName("Test getting empty list of rooms from database")
     public void should_get_empty_list_of_rooms() {
-        assertThat(roomRepoService.getAllRooms().size()).isEqualTo(0);
+        assertThat(roomRepoService.findAll().size()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("Test adding room to database")
     public void should_add_room() {
-        roomRepoService.addRoom(roomFixture);
+        roomRepoService.add(roomFixture);
 
-        assertThat(roomRepoService.getAllRooms().size()).isEqualTo(1);
+        assertThat(roomRepoService.findAll().size()).isEqualTo(1);
 
         roomRepoService.deleteById(roomFixture.getId());
     }
@@ -56,14 +55,14 @@ class RoomRepoServiceTest {
     @Test
     @DisplayName("Test adding reservation to room in database")
     public void should_add_reservation_to_room() {
-        reservationRepoService.addReservation(reservationFixture);
+        reservationRepoService.add(reservationFixture);
         Long id = roomFixture.getId();
 
-        roomRepoService.addRoom(roomFixture);
+        roomRepoService.add(roomFixture);
         reservationsFixture.add(reservationFixture);
         roomFixture.setReservations(reservationsFixture);
 
-        assertThat(roomRepoService.findRoomById(id).get().getReservations().size()).isEqualTo(1);
+        assertThat(roomRepoService.findById(id).get().getReservations().size()).isEqualTo(1);
 
         roomRepoService.deleteById(id);
     }
@@ -71,10 +70,10 @@ class RoomRepoServiceTest {
     @Test
     @DisplayName("Test removing room from database")
     public void should_remove_room_from_database() {
-        roomRepoService.addRoom(roomFixture);
+        roomRepoService.add(roomFixture);
         Long id = roomFixture.getId();
         roomRepoService.deleteById(id);
 
-        assertThat(roomRepoService.getAllRooms().size()).isEqualTo(0);
+        assertThat(roomRepoService.findAll().size()).isEqualTo(0);
     }
 }

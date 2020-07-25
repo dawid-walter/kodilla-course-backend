@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -21,7 +19,6 @@ public class ReservationRepoServiceTest {
     private EntityFixtures entityFixtures = new EntityFixtures();
     private Room roomFixture;
     private Reservation reservationFixture;
-    private List<Room> roomsFixture;
 
     @Autowired
     RoomRepoService roomRepoService;
@@ -32,21 +29,20 @@ public class ReservationRepoServiceTest {
     void setUp() {
         roomFixture = entityFixtures.getRoomFixture();
         reservationFixture = entityFixtures.getReservationFixture();
-        roomsFixture = entityFixtures.getRoomsFixture();
     }
 
     @Test
     @DisplayName("Test getting empty list of reservations from database")
-    public void should_get_empty_list_of_reservations() {
-        assertThat(reservationRepoService.getAllReservations().size()).isEqualTo(0);
+    public void should_get_empty_list_of_reservations_from_database() {
+        assertThat(reservationRepoService.findAll().size()).isEqualTo(0);
     }
 
     @Test
     @DisplayName("Test adding reservation to database")
-    public void should_add_reservation() {
-        reservationRepoService.addReservation(reservationFixture);
+    public void should_add_reservation_to_database() {
+        reservationRepoService.add(reservationFixture);
 
-        assertThat(reservationRepoService.getAllReservations().size()).isEqualTo(1);
+        assertThat(reservationRepoService.findAll().size()).isEqualTo(1);
 
         reservationRepoService.deleteById(reservationFixture.getId());
     }
@@ -54,15 +50,15 @@ public class ReservationRepoServiceTest {
     @Transactional
     @Test
     @DisplayName("Test adding room to reservation in database")
-    public void should_add_room_to_reservation() {
-        reservationRepoService.addReservation(reservationFixture);
+    public void should_add_room_to_reservation_in_database() {
+        roomRepoService.add(roomFixture);
+
+        reservationRepoService.add(reservationFixture);
         Long id = reservationFixture.getId();
 
-        roomRepoService.addRoom(roomFixture);
-        roomsFixture.add(roomFixture);
-        reservationFixture.setRooms(roomsFixture);
+        reservationFixture.setRoom(roomFixture);
 
-        assertThat(reservationRepoService.findReservationById(id).get().getRooms().size()).isEqualTo(1);
+        assertThat(reservationRepoService.findById(id).get().getRoom().getTitle()).isEqualTo("Room 1");
 
         reservationRepoService.deleteById(id);
     }
@@ -70,10 +66,11 @@ public class ReservationRepoServiceTest {
     @Test
     @DisplayName("Test removing reservation from database")
     public void should_remove_reservation_from_database() {
-        reservationRepoService.addReservation(reservationFixture);
+        reservationRepoService.add(reservationFixture);
         Long id = reservationFixture.getId();
         reservationRepoService.deleteById(id);
 
-        assertThat(reservationRepoService.getAllReservations().size()).isEqualTo(0);
+        assertThat(reservationRepoService.findAll().size()).isEqualTo(0);
     }
+
 }

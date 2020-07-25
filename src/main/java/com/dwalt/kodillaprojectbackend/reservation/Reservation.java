@@ -22,8 +22,9 @@ public class Reservation {
     private Long id;
     private LocalDate fromDate;
     private LocalDate toDate;
-    @ManyToMany
-    private List<Room> rooms;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

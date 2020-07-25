@@ -21,5 +21,5 @@ public class RoomDto {
     private final String imageUrl;
     private final double pricePerDay;
 
-    private final List<ReservationDto> dtoReservations;
+    private final List<ReservationDto> reservations;
 }

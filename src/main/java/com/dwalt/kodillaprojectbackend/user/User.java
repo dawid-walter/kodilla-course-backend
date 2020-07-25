@@ -4,7 +4,7 @@ import com.dwalt.kodillaprojectbackend.reservation.Reservation;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +22,9 @@ public class User {
     private String surname;
     private String phoneNumber;
     private String address;
+    private String email;
+    private Role role;
+    private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Reservation> reservations;
+    private List<Reservation> reservations;
 }

@@ -25,6 +25,6 @@ public class Room {
     private int capacity;
     private String imageUrl;
     private double pricePerDay;
-    @ManyToMany(mappedBy = "rooms")
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
 }
