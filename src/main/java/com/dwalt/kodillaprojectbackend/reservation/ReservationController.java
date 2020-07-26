@@ -35,7 +35,6 @@ public class ReservationController {
 
     @PostMapping
     public ResponseEntity<ReservationDto> add(@RequestBody ReservationDto reservationDto) {
-        System.out.println(reservationDto);
         Reservation reservation = reservationRepoService.addDto(reservationDto);
         return new ResponseEntity<>(reservationMapper.mapToReservationDto(reservation), HttpStatus.CREATED);
     }
@@ -44,12 +43,6 @@ public class ReservationController {
         Reservation reservation = reservationRepoService.add(reservationMapper.mapToReservation(reservationDto));
         return new ResponseEntity<>(reservationMapper.mapToReservationDto(reservation), HttpStatus.CREATED);
     }
-
-    /*@PostMapping
-    public ResponseEntity<ReservationDto> add(@RequestBody ReservationDto reservationDto, @RequestParam Long roomId) {
-        Reservation reservation = reservationRepoService.addWithRoom(reservationMapper.mapToReservation(reservationDto), roomId);
-        return new ResponseEntity<>(reservationMapper.mapToReservationDto(reservation), HttpStatus.CREATED);
-    }*/
 
     @DeleteMapping
     public ResponseEntity<ReservationDto> delete(Long id) {
@@ -60,10 +53,4 @@ public class ReservationController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    @PutMapping("/{id}")
-    public void addRoomsToReservation(@PathVariable Long id, @RequestBody List<RoomDto> roomsDto) {
-
-    }
 }
-

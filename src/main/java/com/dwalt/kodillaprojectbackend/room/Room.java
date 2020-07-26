@@ -4,7 +4,9 @@ import com.dwalt.kodillaprojectbackend.reservation.Reservation;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +27,6 @@ public class Room {
     private int capacity;
     private String imageUrl;
     private double pricePerDay;
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     private List<Reservation> reservations;
 }

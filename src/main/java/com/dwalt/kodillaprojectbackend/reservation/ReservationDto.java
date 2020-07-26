@@ -1,5 +1,6 @@
 package com.dwalt.kodillaprojectbackend.reservation;
 
+import com.dwalt.kodillaprojectbackend.room.Room;
 import com.dwalt.kodillaprojectbackend.room.RoomDto;
 import com.dwalt.kodillaprojectbackend.user.User;
 import lombok.Builder;
@@ -19,5 +20,5 @@ public class ReservationDto {
     private final LocalDate fromDate;
     private final LocalDate toDate;
     //private final User user;
-    private final RoomDto room;
+    private final Long roomId;
 }

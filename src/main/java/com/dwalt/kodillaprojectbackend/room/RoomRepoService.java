@@ -25,7 +25,6 @@ public class RoomRepoService {
     }
 
     public Optional<Room> findById(Long id) {
-        //log.info("Object {} obtained from database, on : {}", roomRepo.findById(id), LocalDateTime.now());
         return roomRepo.findById(id);
     }
 

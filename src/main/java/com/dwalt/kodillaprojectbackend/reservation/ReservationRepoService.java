@@ -21,10 +21,10 @@ public class ReservationRepoService {
 
     @Transactional
     public Reservation addDto(ReservationDto reservationDto) {
-        Long roomId = reservationDto.getRoom().getId();
+        Long roomId = reservationDto.getRoomId();
         Reservation reservation = reservationMapper.mapToReservation(reservationDto);
         reservation.setRoom(roomRepo.findById(roomId).get());
-        //log.info("Object {} Added to database, on : {}", reservation, LocalDateTime.now());
+        log.info("Object {} Added to database, on : {}", reservationDto, LocalDateTime.now());
         return reservationRepo.save(reservation);
     }
 

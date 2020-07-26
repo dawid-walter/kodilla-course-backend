@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.dwalt.kodillaprojectbackend.room.Color.BLUE;
+import static com.dwalt.kodillaprojectbackend.room.Color.*;
 
 @Component
 public class Start {
@@ -19,7 +19,7 @@ public class Start {
         Random random = new Random();
         Room room1 = Room.builder()
                 .capacity(5)
-                .color(Color.RED)
+                .color(RED)
                 .title("Room 1")
                 .description("Description for room 1")
                 .imageUrl("https://picsum.photos/200/300?random=" + random.nextInt(100))
@@ -28,7 +28,7 @@ public class Start {
                 .build();
         Room room2 = Room.builder()
                 .capacity(5)
-                .color(Color.RED)
+                .color(GREEN)
                 .title("Room 2")
                 .description("Description for room 2")
                 .imageUrl("https://picsum.photos/200/300?random=" + random.nextInt(100))
@@ -38,7 +38,7 @@ public class Start {
 
         Room room3 = Room.builder()
                 .capacity(5)
-                .color(Color.RED)
+                .color(BLUE)
                 .title("Room 3")
                 .description("Description for room 3")
                 .imageUrl("https://picsum.photos/200/300?random=" + random.nextInt(100))
@@ -48,7 +48,7 @@ public class Start {
 
         Room room4 = Room.builder()
                 .capacity(5)
-                .color(Color.RED)
+                .color(PURPLE)
                 .title("Room 4")
                 .description("Description for room 4")
                 .imageUrl("https://picsum.photos/200/300?random=" + random.nextInt(100))
@@ -58,7 +58,7 @@ public class Start {
 
         Room room5 = Room.builder()
                 .capacity(5)
-                .color(Color.RED)
+                .color(ORANGE)
                 .title("Room 5")
                 .description("Description for room 5")
                 .imageUrl("https://picsum.photos/200/300?random=" + random.nextInt(100))
@@ -71,11 +71,11 @@ public class Start {
                 .toDate(LocalDate.now().plusDays(27))
                 .build();
 
-        roomRepoService.add(room1);
+        /*roomRepoService.add(room1);
         roomRepoService.add(room2);
         roomRepoService.add(room3);
         roomRepoService.add(room4);
-        roomRepoService.add(room5);
+        roomRepoService.add(room5);*/
 
         /*Reservation reservation =
                 Reservation.builder()

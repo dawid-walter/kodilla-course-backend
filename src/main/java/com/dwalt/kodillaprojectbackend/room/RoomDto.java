@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @RequiredArgsConstructor
 @Getter
@@ -22,4 +24,13 @@ public class RoomDto {
     private final double pricePerDay;
 
     private final List<ReservationDto> reservations;
+
+    public boolean isAvailable(LocalDate from, LocalDate to) {
+        AtomicBoolean isAvailable = new AtomicBoolean(true);
+        reservations.forEach(reservation -> {
+            if (from.isBefore(reservation.getToDate()) && to.isAfter(reservation.getFromDate()))
+                isAvailable.set(false);
+        });
+        return isAvailable.get();
+    }
 }

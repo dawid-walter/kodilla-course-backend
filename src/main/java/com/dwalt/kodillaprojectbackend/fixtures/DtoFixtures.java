@@ -2,6 +2,7 @@ package com.dwalt.kodillaprojectbackend.fixtures;
 
 import com.dwalt.kodillaprojectbackend.reservation.ReservationDto;
 import com.dwalt.kodillaprojectbackend.room.Color;
+import com.dwalt.kodillaprojectbackend.room.Room;
 import com.dwalt.kodillaprojectbackend.room.RoomDto;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,12 +27,11 @@ public class DtoFixtures {
                 .imageUrl("https://picsum.photos/200/300?random=" + random.nextInt(100))
                 .pricePerDay(120)
                 .reservations(new ArrayList<>()).build();
-
         reservationDto = ReservationDto.builder()
                 .id(1L)
                 .fromDate(LocalDate.now().plusDays(20))
                 .toDate(LocalDate.now().plusDays(27))
-                .room(roomDto)
+                .roomId(roomDto.getId())
                 .build();
     }
 }

@@ -33,6 +33,7 @@ public class ReservationMapper {
                                 .id(reservation.getId())
                                 .fromDate(reservation.getFromDate())
                                 .toDate(reservation.getToDate())
+                                .roomId(reservation.getRoom().getId())
                                 .build()
                 )
                 .collect(Collectors.toList());

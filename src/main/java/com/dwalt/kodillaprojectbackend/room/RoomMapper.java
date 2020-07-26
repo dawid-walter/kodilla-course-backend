@@ -1,8 +1,6 @@
 package com.dwalt.kodillaprojectbackend.room;
 
-import com.dwalt.kodillaprojectbackend.reservation.Reservation;
 import com.dwalt.kodillaprojectbackend.reservation.ReservationDto;
-import com.dwalt.kodillaprojectbackend.reservation.ReservationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -34,10 +32,17 @@ public class RoomMapper {
                 .description(room.getDescription())
                 .imageUrl(room.getImageUrl())
                 .pricePerDay(room.getPricePerDay())
-                //.dtoReservations(reservationMapper.mapToReservationDtoList(room.getReservations()))
+                .reservations(room.getReservations().stream()
+                        .map(reservation ->
+                                ReservationDto.builder()
+                                        .id(reservation.getId())
+                                        .fromDate(reservation.getFromDate())
+                                        .toDate(reservation.getToDate())
+                                        .roomId(room.getId())
+                                        .build())
+                        .collect(Collectors.toList()))
                 .build();
     }
-
 
 
     public List<RoomDto> mapToRoomDtoList(final List<Room> rooms) {
@@ -51,6 +56,15 @@ public class RoomMapper {
                                 .pricePerDay(room.getPricePerDay())
                                 .imageUrl(room.getImageUrl())
                                 .title(room.getTitle())
+                                .reservations(room.getReservations().stream()
+                                        .map(reservation ->
+                                                ReservationDto.builder()
+                                                        .id(reservation.getId())
+                                                        .fromDate(reservation.getFromDate())
+                                                        .toDate(reservation.getToDate())
+                                                        .roomId(room.getId())
+                                                        .build())
+                                        .collect(Collectors.toList()))
                                 .build()
                 )
                 .collect(Collectors.toList());
