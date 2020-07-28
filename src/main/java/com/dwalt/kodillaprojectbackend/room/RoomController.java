@@ -47,7 +47,29 @@ public class RoomController {
             return new ResponseEntity<>(availableRooms, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
+    @PostMapping
+    public ResponseEntity<RoomDto> add(@RequestBody RoomDto room) {
+        roomRepoService.add(roomMapper.mapToRoom(room));
+        return new ResponseEntity<>(room, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<RoomDto> delete(@PathVariable Long id) {
+        Optional<Room> roomById = roomRepoService.findById(id);
+        if (roomById.isPresent()) {
+            roomRepoService.deleteById(id);
+            return new ResponseEntity<>(roomMapper.mapToRoomDto(roomById.get()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping
+    public ResponseEntity<RoomDto> update(@RequestBody RoomDto room) {
+        Optional<Room> byId = roomRepoService.update(room);
+        return byId.map(value -> new ResponseEntity<>(roomMapper.mapToRoomDto(value), HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
 

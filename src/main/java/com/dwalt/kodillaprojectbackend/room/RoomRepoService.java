@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,7 +30,20 @@ public class RoomRepoService {
     }
 
     public void deleteById(Long id) {
-        log.info("Object {} Added to database, on : {}", roomRepo.findById(id), LocalDateTime.now());
+        log.info("Object {} deleted from database, on : {}", roomRepo.findById(id), LocalDateTime.now());
         roomRepo.deleteById(id);
+    }
+
+    @Transactional
+    public Optional<Room> update(RoomDto room) {
+        Optional<Room> byId = roomRepo.findById(room.getId());
+
+        byId.get().setColor(room.getColor());
+        byId.get().setTitle(room.getTitle());
+        byId.get().setDescription(room.getDescription());
+        byId.get().setCapacity(room.getCapacity());
+        byId.get().setImageUrl(room.getImageUrl());
+        byId.get().setPricePerDay(room.getPricePerDay());
+        return byId;
     }
 }

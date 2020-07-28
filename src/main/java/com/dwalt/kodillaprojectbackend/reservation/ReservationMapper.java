@@ -1,7 +1,5 @@
 package com.dwalt.kodillaprojectbackend.reservation;
 
-import com.dwalt.kodillaprojectbackend.room.Room;
-import com.dwalt.kodillaprojectbackend.room.RoomDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +21,7 @@ public class ReservationMapper {
                 .id(reservation.getId())
                 .fromDate(reservation.getFromDate())
                 .toDate(reservation.getToDate())
+                .roomId(reservation.getRoom().getId())
                 .build();
     }
 

@@ -1,15 +1,11 @@
 package com.dwalt.kodillaprojectbackend.reservation;
 
-import com.dwalt.kodillaprojectbackend.room.Room;
-import com.dwalt.kodillaprojectbackend.room.RoomDto;
-import com.dwalt.kodillaprojectbackend.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Getter

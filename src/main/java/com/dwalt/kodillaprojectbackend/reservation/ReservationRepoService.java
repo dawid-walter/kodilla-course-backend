@@ -1,5 +1,7 @@
 package com.dwalt.kodillaprojectbackend.reservation;
 
+import com.dwalt.kodillaprojectbackend.room.Color;
+import com.dwalt.kodillaprojectbackend.room.Room;
 import com.dwalt.kodillaprojectbackend.room.RoomRepoService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -47,7 +49,19 @@ public class ReservationRepoService {
     }
 
     public void deleteById(Long id) {
-        log.info("Object {} deleted from database, on : {}", reservationRepo.findById(id), LocalDateTime.now());
+        log.info("Object {} deleted from database, on : {}", reservationMapper.mapToReservationDto(reservationRepo.findById(id).get()), LocalDateTime.now());
         reservationRepo.deleteById(id);
     }
+
+    @Transactional
+    public Optional<Reservation> update(ReservationDto reservation) {
+        Room room = roomRepo.findById(reservation.getRoomId()).get();
+        Optional<Reservation> byId = reservationRepo.findById(reservation.getId());
+        byId.get().setFromDate(reservation.getFromDate());
+        byId.get().setToDate(reservation.getToDate());
+        byId.get().setRoom(room);
+        return byId;
+    }
+
+
 }

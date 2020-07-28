@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class RoomMapper {
-
     public Room mapToRoom(final RoomDto roomDto) {
         return Room.builder()
                 .id(roomDto.getId())
@@ -43,7 +42,6 @@ public class RoomMapper {
                         .collect(Collectors.toList()))
                 .build();
     }
-
 
     public List<RoomDto> mapToRoomDtoList(final List<Room> rooms) {
         return rooms.stream()

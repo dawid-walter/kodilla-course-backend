@@ -2,7 +2,6 @@ package com.dwalt.kodillaprojectbackend.fixtures;
 
 import com.dwalt.kodillaprojectbackend.reservation.ReservationDto;
 import com.dwalt.kodillaprojectbackend.room.Color;
-import com.dwalt.kodillaprojectbackend.room.Room;
 import com.dwalt.kodillaprojectbackend.room.RoomDto;
 import lombok.AccessLevel;
 import lombok.Getter;
