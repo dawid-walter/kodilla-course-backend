@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 
 @RequiredArgsConstructor
 @Service
@@ -17,7 +18,7 @@ public class RoomRepoService {
     private final RoomRepo roomRepo;
 
     public Room add(Room room) {
-        log.info("Object {} Added to database, on : {}", room, LocalDateTime.now());
+        //log.info("Object {} Added to database, on : {}", room, LocalDateTime.now());
         return roomRepo.save(room);
     }
 
@@ -32,6 +33,10 @@ public class RoomRepoService {
     public void deleteById(Long id) {
         log.info("Object {} deleted from database, on : {}", roomRepo.findById(id), LocalDateTime.now());
         roomRepo.deleteById(id);
+    }
+
+    public Optional<Room> findRoomByTitle(String title) {
+        return roomRepo.findByTitle(title);
     }
 
     @Transactional

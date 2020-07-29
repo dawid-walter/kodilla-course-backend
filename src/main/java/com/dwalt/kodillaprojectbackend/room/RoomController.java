@@ -36,6 +36,15 @@ public class RoomController {
 
     }
 
+    @GetMapping("/byTitle")
+    public ResponseEntity<RoomDto> getByTitle(@RequestParam String title) {
+        Optional<Room> roomByTitle = roomRepoService.findRoomByTitle(title);
+        return roomByTitle.map(room ->
+                new ResponseEntity<>(roomMapper.mapToRoomDto(room),
+                        HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+
+    }
+
     @GetMapping("/inDates")
     public ResponseEntity<List<RoomDto>> getAvailable(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
                                                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {

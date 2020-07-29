@@ -15,6 +15,5 @@ public class ReservationDto {
     private final Long id;
     private final LocalDate fromDate;
     private final LocalDate toDate;
-    //private final User user;
     private final Long roomId;
 }
